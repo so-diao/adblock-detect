@@ -1,11 +1,10 @@
 
-const TRAP_URL = '/?advertiserId=&platform='
-const ERROR_MESSAGES = [
+const NETWORK_ERROR_MESSAGES = [
   'Failed to fetch',
   'NetworkError when attempting to fetch resource.'
 ]
+const TRAP_URL = '/?advertiserId=&platform='
 const TIMEOUT = 30
-
 
 /**
  * @returns {Promise<Boolean>}
@@ -20,8 +19,9 @@ export default () =>{
     })
     .then(resolve.bind(null, false))
     .catch(error =>{
-      const adbEnabled = ERROR_MESSAGES.includes(error.message)
-      resolve(adbEnabled)
+      const message = error.message
+      const isNetworkError = NETWORK_ERROR_MESSAGES.includes(message)
+      resolve(isNetworkError)
     })
   })
 }
